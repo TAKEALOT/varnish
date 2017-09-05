@@ -14,15 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+major_version_no_dot = node['varnish']['version'].to_s.tr('.','')
 case node['platform_family']
 when 'debian'
   include_recipe 'apt'
   apt_repository 'varnish-cache' do
-    uri "https://packagecloud.io/varnishcache/varnish#{node['varnish']['version']}/#{node['platform']}/"
+    uri "https://packagecloud.io/varnishcache/varnish#{major_version_no_dot}/#{node['platform']}/"
     distribution node['lsb']['codename']
     components ["main"]
-    key "https://packagecloud.io/varnishcache/varnish#{node['varnish']['version']}/gpgkey"
+    key "https://packagecloud.io/varnishcache/varnish#{major_version_no_dot}/gpgkey"
     deb_src true
     notifies 'nothing', 'execute[apt-get update]', 'immediately'
   end
